@@ -1,11 +1,62 @@
-package com.example.financialbank;
+package com.example.financialbank.service;
+
+import com.example.financialbank.model.Account;
+import com.example.financialbank.model.User;
+import com.example.financialbank.repository.AccountRepository;
+import com.example.financialbank.repository.UserRepository;
+import jakarta.persistence.GeneratedValue;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class AccountService {
-    private final AccountRepository repository;
+    //criar conta
+    //buscar contas do usuário
+    //depositar dinheiro
+    //sacar dinheiro
+    //transferir dinheiro
+    private final AccountRepository accountRepository;
+    private UserRepository userRepository;
 
-    public AccountService(AccountRepository repository){
-        this.repository = repository;
+    public AccountService(AccountRepository accountRepository, UserRepository userRepository){
+        this.accountRepository = accountRepository;
+        this.userRepository = userRepository;
     }
+
+    //criação da conta,
+
+    public Account createAccount(Long userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado! Faça seu cadastro!"));
+
+        //para criar uma nova conta.
+        Account account = new Account();
+        account.setUsuario(user);
+        account.setBalance(BigDecimal.ZERO);
+        account.setDateCreation(LocalDateTime.now());
+
+        //A expressão UUID.randomUUID().toString().substring(...)
+        // em Java é usada para gerar um identificador único,
+        // convertê-lo para texto e depois recortar uma parte específica dessa String
+        account.setNumberAccount(UUID.randomUUID().toString().substring(0,8));
+
+        return accountRepository.save(account);
+    }
+
+    //Ato de colocar dinheiro ou ativos financeiros em uma conta bancária para aumentar o saldo, ou pagar uma divida que
+    //será cobrada se saldo estiver negativo.
+    public Account deposit(Long accountId, BigDecimal valor){
+        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0){
+            throw new RuntimeException("Valor de depósito inválido");
+        }
+
+
+    public Account extract(AccountRepository repository){
+
+    }
+
+
 
 
 

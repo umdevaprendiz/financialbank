@@ -1,5 +1,6 @@
-package com.example.financialbank;
+package com.example.financialbank.model;
 
+import com.example.financialbank.configuration.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 

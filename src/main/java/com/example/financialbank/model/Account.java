@@ -1,4 +1,4 @@
-package com.example.financialbank;
+package com.example.financialbank.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;

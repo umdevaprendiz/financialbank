@@ -1,5 +1,7 @@
-package com.example.financialbank;
+package com.example.financialbank.service;
 
+import com.example.financialbank.repository.UserRepository;
+import com.example.financialbank.model.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ public class UserService {
         if (repository.existsByCpf(user.getCpf())) {
             throw new RuntimeException("User já cadastrado!");
         }
-        
+
         //criptografa a senha...
         String senhaCriptografada = passwordEncoder.encode(user.getSenha());
         user.setSenha(senhaCriptografada);
