@@ -1,4 +1,7 @@
 package com.example.financialbank;
 
-public class Repository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface Repository extends JpaRepository<User, Integer> {
+    boolean existsByCpf(Integer Cpf);
 }
