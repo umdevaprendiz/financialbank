@@ -1,5 +1,6 @@
 package com.example.financialbank;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -22,31 +23,27 @@ public class User {
     @Column(name = "email_user", unique = true, nullable = false)
     private String email;
 
+
+    //Proíbe o Json de acessar a senha.
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String senha;
 
+    //um usuário pode ter muitas contas.
     @OneToMany(mappedBy = "usuario")
     private List<Account> contas = new ArrayList<>();
 
-    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    //mapeia a coluna estrangeira, no caso o id.
+    @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")
     @ManyToOne
     private Role role;
 
-
-    public String getSenha() {
-        return senha;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getNome() {
@@ -57,11 +54,35 @@ public class User {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public List<Account> getContas() {
+        return contas;
+    }
+
+    public void setContas(List<Account> contas) {
+        this.contas = contas;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
