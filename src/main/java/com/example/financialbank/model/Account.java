@@ -10,10 +10,6 @@ import java.time.LocalDateTime;
 @Table(name = "account")
 public class Account {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     public String getNumberAccount() {
         return numberAccount;
     }
@@ -46,12 +42,15 @@ public class Account {
         this.usuario = usuario;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     //não pode deixar nulo e tem que ser único para cada usuário.
     @Column(name = "number_account", unique = true, nullable = false)
     private String numberAccount;
 
-    @Column(name = "saldo")
+    @Column(name = "saldo", nullable = false)
     private BigDecimal balance;
 
     //Don't have permission for change the date creation.
@@ -62,7 +61,7 @@ public class Account {
 
     //Muitas contas podem pertencer a muitos usuários.
     @ManyToOne
-    @JoinColumn(name = "user_account") //
+    @JoinColumn(name = "user_account") //mapear a coluna da chave estrangeira que é o User.
     private User usuario;
 
 }
