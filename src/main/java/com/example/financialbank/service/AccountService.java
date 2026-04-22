@@ -1,13 +1,17 @@
 package com.example.financialbank.service;
 
+import com.example.financialbank.configuration.TransactionType;
 import com.example.financialbank.model.Account;
+import com.example.financialbank.model.Transaction;
 import com.example.financialbank.model.User;
 import com.example.financialbank.repository.AccountRepository;
+import com.example.financialbank.repository.TransactionRepository;
 import com.example.financialbank.repository.UserRepository;
 import jakarta.persistence.GeneratedValue;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class AccountService {
@@ -18,15 +22,17 @@ public class AccountService {
     //transferir dinheiro
     private final AccountRepository accountRepository;
     private UserRepository userRepository;
+    private TransactionRepository transactionRepository;
 
-    public AccountService(AccountRepository accountRepository, UserRepository userRepository){
+    public AccountService(AccountRepository accountRepository, UserRepository userRepository, TransactionRepository transactionRepository) {
         this.accountRepository = accountRepository;
         this.userRepository = userRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     //criação da conta,
 
-    public Account createAccount(Long userId){
+    public Account createAccount(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado! Faça seu cadastro!"));
 
@@ -39,7 +45,7 @@ public class AccountService {
         //A expressão UUID.randomUUID().toString().substring(...)
         // em Java é usada para gerar um identificador único,
         // convertê-lo para texto e depois recortar uma parte específica dessa String
-        account.setNumberAccount(UUID.randomUUID().toString().substring(0,8));
+        account.setNumberAccount(UUID.randomUUID().toString().substring(0, 8));
 
         return accountRepository.save(account);
     }
@@ -71,21 +77,31 @@ public class AccountService {
 
     }
 
-    //lista de movimento da conta.
-    // 1- receber id da conta
-    //2-
-    public Account extract(Long id, String numberAccount){
+    //O extrato bancário é um resumo detalhado de todas as movimentações (entradas e saídas)
+    // de uma conta corrente ou poupança em um período definido. Ele registra depósitos, saques, transferências (TED/DOC),
+    // pagamentos e o saldo final.
+    // Pode ser consultado em aplicativos, internet banking ou caixas eletrônicos.
 
-        //1-
-        Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Conta não encontrada!"));
+    private void registrarTransacao(Account account,
+                                    BigDecimal value,
+                                    TransactionType type,
+                                    BigDecimal currentBalance){
 
+        Transaction transaction = new Transaction();
 
+        transaction.setAccount(account);
+        transaction.setValue(value);
+        transaction.setTransactionType(type);
+        transaction.setCurrentBalance(currentBalance);
 
+        transactionRepository.save(transaction);
     }
 
+    private List<Transaction> getStatement(Long accountId){
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(()-> new RuntimeException("Conta não encontrada!"));
 
-
-
-
+        return transactionRepository
+                .findByAccountOrderByDateDesc(account);
+    }
 }
