@@ -1,4 +1,7 @@
 package com.example.financialbank.repository;
 
-public class TransactionRepository {
+import com.example.financialbank.model.Transaction;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 }

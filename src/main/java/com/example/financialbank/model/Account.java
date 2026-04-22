@@ -50,12 +50,12 @@ public class Account {
     @Column(name = "number_account", unique = true, nullable = false)
     private String numberAccount;
 
-    @Column(name = "saldo", nullable = false)
+    @Column(name = "balance", nullable = false)
     private BigDecimal balance;
 
     //Don't have permission for change the date creation.
     @CreationTimestamp
-    @Column(name = "data_da_criação", updatable = false)
+    @Column(name = "date_creation", updatable = false)
     private LocalDateTime dateCreation;
 
 
