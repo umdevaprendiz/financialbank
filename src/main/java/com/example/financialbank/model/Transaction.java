@@ -17,8 +17,6 @@ public class Transaction {
     private Long id;
 
 
-
-
     @Column(name = "value_transaction", updatable = false)
     private BigDecimal value;
 
