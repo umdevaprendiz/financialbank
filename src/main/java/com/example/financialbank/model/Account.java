@@ -43,7 +43,7 @@ public class Account {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private Long id;
 
     //não pode deixar nulo e tem que ser único para cada usuário.
@@ -60,8 +60,8 @@ public class Account {
 
 
     //Muitas contas podem pertencer a muitos usuários.
-    @ManyToOne
-    @JoinColumn(name = "user_account") //mapear a coluna da chave estrangeira que é o User.
+    @OneToMany
+    @JoinColumn(name = "user_account")//mapear a coluna da chave estrangeira que é o User.
     private User usuario;
 
 }

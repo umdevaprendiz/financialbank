@@ -12,8 +12,8 @@ public class Role {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private Long id;
 
     @Column(name="name_role", nullable = false, unique = true)
     private String name; //ROLE_USER / ROLE_ADMIN

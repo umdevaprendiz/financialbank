@@ -6,13 +6,18 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+//nome
+//cpf
+//email
+//password
 @Entity
 @Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private Long id;
 
     @Column(name = "cpf_user", unique = true, nullable = false)
@@ -32,7 +37,7 @@ public class User {
 
     //um usuário pode ter muitas contas.
     @OneToMany(mappedBy = "usuario")
-    private List<Account> contas = new ArrayList<>();
+    private Set<Account> contas;
 
     //mapeia a coluna estrangeira, no caso o id.
     @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")
@@ -71,11 +76,11 @@ public class User {
         this.senha = senha;
     }
 
-    public List<Account> getContas() {
+    public Set<Account> getContas() {
         return contas;
     }
 
-    public void setContas(List<Account> contas) {
+    public void setContas(Set<Account> contas) {
         this.contas = contas;
     }
 
