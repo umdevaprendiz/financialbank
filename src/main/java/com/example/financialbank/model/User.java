@@ -1,23 +1,30 @@
 package com.example.financialbank.model;
 
-import com.example.financialbank.configuration.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.jspecify.annotations.Nullable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+import com.example.financialbank.configuration.Role;
 
-//nome
-//cpf
-//email
-//password
+import java.util.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "cpf_user", unique = true, nullable = false)
@@ -29,6 +36,9 @@ public class User {
     @Column(name = "email_user", unique = true, nullable = false)
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
 
     //Proíbe o Json de acessar a senha.
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -36,59 +46,41 @@ public class User {
     private String senha;
 
     //um usuário pode ter muitas contas.
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "user")
     private Set<Account> contas;
 
-    //mapeia a coluna estrangeira, no caso o id.
-    @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")
-    @ManyToOne
-    private Role role;
-
-    public String getCpf() {
-        return cpf;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.getAuthorities();
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    @Override
+    public @Nullable String getPassword() {
+        return this.senha;
     }
 
-    public String getNome() {
-        return nome;
+    @Override
+    public String getUsername() {
+        return this.cpf;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
     }
 
-    public String getEmail() {
-        return email;
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public Set<Account> getContas() {
-        return contas;
-    }
-
-    public void setContas(Set<Account> contas) {
-        this.contas = contas;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
 }

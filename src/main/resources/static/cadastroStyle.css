@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
+
+body {
+    background-color: #f1c40f;
+    font-family: 'League Spartan', sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow-y: auto; /* Permite rolagem se a tela for pequena */
+}
+
+@keyframes surgirEDeslizar {
+    0% {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.Logo {
+    padding: 20px;
+    position: absolute;
+    top: 20px;
+    left: 40px;
+}
+
+.Logo h1 {
+    font-size: 30px;
+    margin: 0;
+    color: black;
+    animation: surgirEDeslizar 1.5s ease-out forwards;
+}
+
+/* Caixa de Cadastro/Login */
+.cadastro {
+    background-color: rgba(0, 0, 0, 0.85); /* Um pouco mais escuro para melhor leitura */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    width: 350px; /* Leve aumento na largura para acomodar melhor os campos */
+    margin: 20px;
+}
+
+.cadastro h1 {
+    font-size: 28px;
+    color: white; /* Título com a cor do tema para destaque */
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* Estilo geral para todas as labels */
+/* Estilo para todas as labels centralizadas */
+.cadastro label {
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 8px; /* Aumentei um pouco o espaço para respirar */
+    font-size: 14px;
+
+    display: block;     /* Ocupa a linha toda */
+    width: 100%;        /* Garante 100% da largura da div pai */
+    text-align: center; /* Centraliza o texto dentro dos 100% */
+}
+
+.cadastro input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    margin-bottom: 18px;
+    outline: none;
+    font-family: 'League Spartan', sans-serif;
+    transition: 0.3s;
+
+    display: block;     /* Garante que se comporte como bloco */
+    width: 100%;        /* Faz o input ocupar a largura total do container */
+    box-sizing: border-box; /* IMPORTANTE: evita que o padding "estoure" a largura */
+    text-align: center; /* Centraliza o placeholder e o que for digitado */
+}
+
+/* Efeito de foco nos inputs */
+.cadastro input:focus {
+    border-color: #f1c40f;
+}
+
+.btn-entrar {
+width: 100%;
+    box-sizing: border-box;
+    background-color: #0f44f3;
+    color: #ffffff;
+    padding: 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.btn-entrar:hover {
+    background-color: #0a35bd;
+    transform: scale(1.02);
+}
+
+/* Link para alternar entre Login/Cadastro */
+.cadastro p {
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.cadastro a {
+    color: #f1c40f;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.cadastro a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para mensagens de erro/sucesso */
+.alert {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 13px;
+    text-align: center;
+}

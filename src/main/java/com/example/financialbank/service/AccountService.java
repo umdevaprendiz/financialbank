@@ -8,6 +8,9 @@ import com.example.financialbank.repository.AccountRepository;
 import com.example.financialbank.repository.TransactionRepository;
 import com.example.financialbank.repository.UserRepository;
 import jakarta.persistence.GeneratedValue;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +44,7 @@ public class AccountService {
 
         //para criar uma nova conta.
         Account account = new Account();
-        account.setUsuario(user);
+        account.setUser(user);
         account.setBalance(BigDecimal.ZERO);
         account.setDateCreation(LocalDateTime.now());
         account.setNumberAccount(UUID.randomUUID().toString().substring(0, 8));

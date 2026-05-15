@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="/static/authenticatedpagestyle/styleAuthenticated.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="background-blur one"></div>
+<div class="background-blur two"></div>
+
+<div class="container">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+
+        <div class="profile">
+            <img src="/static/perfil.png" alt="Perfil">
+
+            <div class="profile-info">
+                <span class="small-text">Bem-vindo de volta</span>
+                <h1>Olá, <b th:text="${nome}">User</b></h1>
+            </div>
+        </div>
+
+        <a href="/logout" class="logout-btn">
+            Sair
+        </a>
+
+    </header>
+
+    <!-- SALDO -->
+    <section class="balance-card">
+
+        <div class="balance-top">
+            <span>Saldo disponível</span>
+        </div>
+
+        <h2>
+            R$ <span th:text="${saldo}">0.00</span>
+        </h2>
+
+        <div class="card-number">
+            <span>Conta: <b th:text="${conta}">12345-6</b></span>
+            <span>Agência: <b th:text="${agencia}">0001</b></span>
+        </div>
+
+    </section>
+
+    <!-- AÇÕES -->
+    <section class="actions">
+
+        <h3>O que deseja fazer hoje?</h3>
+
+        <div class="actions-grid">
+
+            <a href="/pix" class="action-card">
+                <div class="icon">💸</div>
+                <span>Pix & Transferência</span>
+            </a>
+
+            <a href="/pagar" class="action-card">
+                <div class="icon"><img src="/static/pix.png" alt="pix" width="50px"></div>
+                <span>Pagar</span>
+            </a>
+
+            <a href="/saque" class="action-card">
+                <div class="icon">🏧</div>
+                <span>Sacar</span>
+            </a>
+
+            <a href="/extrato" class="action-card">
+                <div class="icon">📊</div>
+                <span>Extrato</span>
+            </a>
+
+        </div>
+
+    </section>
+
+</div>
+
+</body>
+</html>

@@ -10,19 +10,17 @@ public class UserDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Long getId() {
-        return id;
-    }
+    private String nome;
+    private String email;
+    private String senha;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String cpf;
 
     public String getNome() {
         return nome;
     }
 
-    public void setName(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -42,14 +40,19 @@ public class UserDTO {
         this.senha = senha;
     }
 
-    private String nome;
-    private String email;
-    private String senha;
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 
     public UserDTO(){
 
     }
-    public UserDTO(String nome, String email, String senha){
+    public UserDTO(String nome, String email, String senha, String cpf){
+        this.cpf = cpf;
         this.nome = nome;
         this.email = email;
         this.senha = senha;

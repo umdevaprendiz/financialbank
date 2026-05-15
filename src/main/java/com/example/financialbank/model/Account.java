@@ -2,12 +2,18 @@ package com.example.financialbank.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.jspecify.annotations.Nullable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
-@Table(name = "account")
+@Table(name = "accounts")
 public class Account {
 
     public String getNumberAccount() {
@@ -34,16 +40,16 @@ public class Account {
         this.dateCreation = dateCreation;
     }
 
-    public User getUsuario() {
-        return usuario;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsuario(User usuario) {
-        this.usuario = usuario;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     //não pode deixar nulo e tem que ser único para cada usuário.
@@ -53,6 +59,14 @@ public class Account {
     @Column(name = "balance", nullable = false)
     private BigDecimal balance;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     //Don't have permission for change the date creation.
     @CreationTimestamp
     @Column(name = "date_creation", updatable = false)
@@ -60,8 +74,8 @@ public class Account {
 
 
     //Muitas contas podem pertencer a muitos usuários.
-    @OneToMany
-    @JoinColumn(name = "user_account")//mapear a coluna da chave estrangeira que é o User.
-    private User usuario;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)//mapear a coluna da chave estrangeira que é o User.
+    private User user;
 
 }

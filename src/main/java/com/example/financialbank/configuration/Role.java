@@ -1,31 +1,59 @@
 package com.example.financialbank.configuration;
 
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
-@Entity
-@Table(name = "role")
-public class Role {
+import static com.example.financialbank.configuration.Permission.*;
 
+@RequiredArgsConstructor
+public enum Role {
+    USER(Collections.emptySet()),
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    ADMIN(
+            Set.of(
+                    ADMIN_READ,
+                    ADMIN_UPDATE,
+                    ADMIN_DELETE,
+                    ADMIN_CREATE,
+                    MANAGER_READ,
+                    MANAGER_UPDATE,
+                    MANAGER_DELETE,
+                    MANAGER_CREATE
+            )
+    ),
 
-    @Column(name="name_role", nullable = false, unique = true)
-    private String name; //ROLE_USER / ROLE_ADMIN
+    MANAGER(
+            Set.of(
+                    MANAGER_READ,
+                    MANAGER_UPDATE,
+                    MANAGER_DELETE,
+                    MANAGER_CREATE
+            )
+    )
 
-    @Column(name="description", nullable = false)
-    private String description;
+    ;
 
-    @CreationTimestamp
-    @Column(updatable = false, name = "created_at")
-    private Date createdAt;
+    @Getter
+    //cada Role possui um conjunto de permissões
+    private final Set<Permission> permissions;
 
-    @UpdateTimestamp
-    @Column(name = "update_at")
-    private Date updateAt;
+    public List<SimpleGrantedAuthority> getAuthorities() {
+        var authorities = new ArrayList<>(
+                getPermissions()
+                        .stream()
+                        .map(permission ->
+                                new SimpleGrantedAuthority(permission.name()))
+                        .toList()
+        );
+        authorities.add(
+                new SimpleGrantedAuthority("ROLE_" + this.name())
+        );
+        return authorities;
+    }
 }

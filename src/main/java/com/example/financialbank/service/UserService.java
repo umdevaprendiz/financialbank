@@ -1,39 +1,57 @@
 package com.example.financialbank.service;
 
-import com.example.financialbank.repository.UserRepository;
+import com.example.financialbank.configuration.Role;
 import com.example.financialbank.model.User;
+import com.example.financialbank.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 @Service
-public class UserService {
-    private final UserRepository repository;
+public class UserService implements UserDetailsService {
+
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
+    // Injeção de dependência via construtor
+    public UserService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.repository = repository;
     }
 
-    //Registrar User.
-    public User register(User user) {
+    @Override
+    public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
+        User user = userRepository.findByCpf(cpf);
+        if (user == null) {
+            throw new UsernameNotFoundException("Usuário não encontrado");
+        }
+
+        // Criando o objeto User do Spring Security baseado no seu Model
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getCpf())
+                .password(user.getSenha())
+                .authorities(user.getAuthorities())
+                .build();
+    }
+
+    public User saveUser(User user) {
+
         if (user.getNome() == null ||
-                user.getCpf() == null ||
+                user.getSenha() == null ||
                 user.getEmail() == null ||
-                user.getSenha() == null) {
-            throw new RuntimeException("Campos obrigatórios não preenchidos");
-        }
-        //Conferir se exister um User pelo Cpf, visto que o Cpf é unico.
-        if (repository.existsByCpf(user.getCpf())) {
-            throw new RuntimeException("User já cadastrado!");
+                user.getCpf() == null) {
+
+            throw new RuntimeException("Campos precisam ser preenchidos.");
         }
 
-        //criptografa a senha...
-        String senhaCriptografada = passwordEncoder.encode(user.getSenha());
-        user.setSenha(senhaCriptografada);
-        return repository.save(user);
+        user.setRole(Role.USER);
+
+        return userRepository.save(user);
     }
+
 
 }
-
-

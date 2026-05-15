@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/cadastroStyle.css" th:href="@{/style.css}">
+    <title>Cadastro</title>
+</head>
+<body>
+<div class="Logo">
+    <h1>FinancialBank</h1>
+</div>
+
+<div class="cadastro">
+    <h1>Criar Conta</h1>
+
+    <form th:action="@{/cadastro}" th:object="${user}" method="post">
+
+        <label class="label-name">Nome Completo</label>
+        <input type="text" th:field="*{nome}" placeholder="Digite seu nome completo" required>
+
+        <label class="label-login">CPF</label>
+        <input type="text" th:field="*{cpf}" placeholder="Digite seu CPF (apenas números)" required>
+
+        <label class="label-email">E-mail</label>
+        <input type="email" th:field="*{email}" placeholder="exemplo@email.com" required>
+
+        <label class="label-senha">Senha</label>
+        <input type="password" th:field="*{senha}" placeholder="Crie uma senha forte" required>
+
+
+        <button type="submit" class="btn-entrar">Finalizar Cadastro</button>
+    </form>
+
+    <p style="margin-top: 15px;">Já tem conta? <a th:href="@{/login}">Entrar</a></p>
+</div>
+
+</body>
+</html>
