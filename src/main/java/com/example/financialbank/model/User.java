@@ -9,6 +9,8 @@ import lombok.Setter;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import com.example.financialbank.configuration.Role;
@@ -33,8 +35,16 @@ public class User implements UserDetails {
     @Column(name = "name", nullable = false)
     private String nome;
 
+    private boolean ativo = true;
+
+    private LocalDateTime atualizadoEm;
+
     @Column(name = "email_user", unique = true, nullable = false)
     private String email;
+
+    @Column(name="situationEmail", unique = true, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private String situationEmail;
 
     @Enumerated(EnumType.STRING)
     private Role role;

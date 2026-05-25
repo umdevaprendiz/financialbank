@@ -3,9 +3,8 @@ package com.example.financialbank.dto;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class UserDTO {
+public class UserCreateDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -48,10 +47,10 @@ public class UserDTO {
         this.cpf = cpf;
     }
 
-    public UserDTO(){
+    public UserCreateDTO(){
 
     }
-    public UserDTO(String nome, String email, String senha, String cpf){
+    public UserCreateDTO(String nome, String email, String senha, String cpf){
         this.cpf = cpf;
         this.nome = nome;
         this.email = email;
