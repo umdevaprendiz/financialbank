@@ -1,13 +1,11 @@
 package com.example.financialbank.dto;
 
-import com.example.financialbank.enums.AccountStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 //DTO, oque vai para o front, como uma forma de segurança pra não enviar dados sensíveis.
@@ -19,7 +17,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountDTO {
+public class DashboardDTO {
 
     private Long transactionToday;
     private BigDecimal volumeFinanceToday;

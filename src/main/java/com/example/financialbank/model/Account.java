@@ -1,6 +1,8 @@
 package com.example.financialbank.model;
 
+import com.example.financialbank.enums.AccountStatus;
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,42 +14,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "accounts")
 public class Account {
-
-    public String getNumberAccount() {
-        return numberAccount;
-    }
-
-    public void setNumberAccount(String numberAccount) {
-        this.numberAccount = numberAccount;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
-
-    public LocalDateTime getDateCreation() {
-        return dateCreation;
-    }
-
-    public void setDateCreation(LocalDateTime dateCreation) {
-        this.dateCreation = dateCreation;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -59,18 +29,14 @@ public class Account {
     @Column(name = "balance", nullable = false)
     private BigDecimal balance;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     //Don't have permission for change the date creation.
     @CreationTimestamp
     @Column(name = "date_creation", updatable = false)
     private LocalDateTime dateCreation;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private AccountStatus status;
 
 
     //Muitas contas podem pertencer a muitos usuários.

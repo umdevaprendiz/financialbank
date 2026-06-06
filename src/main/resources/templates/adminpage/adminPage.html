@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/adminpagestyle/styleadmin.css" th:href="@{/styleadmin.css}">
+    <link rel="stylesheet" th:href="@{/adminpagestyle/styleadmin.css}">
     <title>Admin Management</title>
 </head>
 
@@ -12,7 +12,7 @@
 <header class="navbar">
 
     <div class="left-navbar">
-        <img class="perfil" src="../../static/perfil.png" th:href="@{/perfil.png}" >
+        <img class="perfil" src="../../static/perfil.png" th:src="@{/perfil.png}" >
 
         <div class="admin-info">
             <h1>Admin Painel</h1>
@@ -28,11 +28,28 @@
 
 <!-- MENU -->
 <nav class="admin-options">
-    <a th:href="">Dashboard</a>
-    <a th:href="">Users</a>
-    <a th:href="">Products</a>
-    <a th:href="">Orders</a>
+    <a href="">Dashboard</a>
+    <a href="">Users</a>
 </nav>
+
+<div class="dashboard">
+    <div class="card">
+        <p>Transações hoje</p>
+        <h2 th:text="${dashboard.transactionToday}">0</h2>
+    </div>
+    <div class="card">
+        <p>Volume financeiro</p>
+        <h2 th:text="${dashboard.volumeFinanceToday}">0</h2>
+    </div>
+    <div class="card">
+        <p>Contas ativas</p>
+        <h2 th:text="${dashboard.accountActive}">0</h2>
+    </div>
+    <div class="card">
+        <p>Contas bloqueadas</p>
+        <h2 th:text="${dashboard.accountBlocked}">0</h2>
+    </div>
+</div>
 
 </body>
 </html>

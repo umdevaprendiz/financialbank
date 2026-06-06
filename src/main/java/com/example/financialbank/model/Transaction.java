@@ -1,89 +1,56 @@
 package com.example.financialbank.model;
 
 import com.example.financialbank.configuration.TransactionType;
+import com.example.financialbank.enums.TransactionStatus;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "transactions")
 public class Transaction {
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "tracking_code", unique = true, nullable = false, updatable = false)
+    private String trackingCode = UUID.randomUUID().toString();
 
-    @Column(name = "value_transaction", updatable = false)
-    private BigDecimal value;
+    @Column(nullable = false)
+    private BigDecimal amount;
 
-
-    @Column(name  = "date_transaction", updatable = false)
-    @CreationTimestamp //diz o horário exato que foi criado.
-    private LocalDateTime date;
-
-
-    //como criamos o enum, podemos utiliza-lo como atributo do entity.
-    @Column(name = "transaction_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private TransactionType transactionType;
+    @Column(nullable = false)
+    private TransactionType type; // PIX, TED, DOC, BOLETO, CARTAO
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TransactionStatus status; // PENDENTE, APROVADA, RECUSADA, ESTORNADA
 
-    @Column(name = "current_balance", updatable = false)
-    private BigDecimal currentBalance;
+    @ManyToOne
+    @JoinColumn(name = "account_origin_id", nullable = false)
+    private Account accountOrigin;
 
-    @JoinColumn(name = "account_id", nullable = false)
-    @ManyToOne //muitas transições podem ter em uma conta.
-    private Account account;
+    @ManyToOne
+    @JoinColumn(name = "account_destination_id", nullable = true)
+    private Account accountDestination; // nullable para boletos
 
-    public BigDecimal getValue() {
-        return value;
-    }
+    @Column(length = 255)
+    private String description;
 
-    public void setValue(BigDecimal value) {
-        this.value = value;
-    }
+    @CreationTimestamp
+    @Column(name = "date_creation", updatable = false)
+    private LocalDateTime dateCreation;
 
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-    public TransactionType getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
-    }
-
-    public BigDecimal getCurrentBalance() {
-        return currentBalance;
-    }
-
-    public void setCurrentBalance(BigDecimal currentBalance) {
-        this.currentBalance = currentBalance;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
+    @UpdateTimestamp
+    @Column(name = "date_update")
+    private LocalDateTime dateUpdate;
 }

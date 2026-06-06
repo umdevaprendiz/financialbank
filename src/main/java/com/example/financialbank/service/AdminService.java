@@ -1,12 +1,11 @@
 package com.example.financialbank.service;
 
-import com.example.financialbank.dto.UserUpdateDTO;
 import com.example.financialbank.model.User;
 import com.example.financialbank.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import com.example.financialbank.dto.UserUpdateDTO;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,17 +13,19 @@ import java.util.List;
 public class AdminService {
     private final UserRepository repository;
     private final PasswordEncoder encoder;
-    public AdminService(UserRepository repository, PasswordEncoder encoder){
+
+    public AdminService(UserRepository repository, PasswordEncoder encoder) {
         this.encoder = encoder;
         this.repository = repository;
     }
+
     //Listar os usuários
-    public List<User> listarUsuarios(){
+    public List<User> listarUsuarios() {
         return repository.findAll();
     }
 
- //BUSCA USUÁRIO PELO ID
-    public User buscarPorId(Long id){
+    //BUSCA USUÁRIO PELO ID
+    public User buscarPorId(Long id) {
         return repository.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException("Usuário não encontrado"));
@@ -49,8 +50,9 @@ public class AdminService {
             user.setEmail(dto.getEmail());
         }
 
+        //resolver problema da injeção do encoder...
         if (dto.getSenha() != null && !dto.getSenha().isBlank()) {
-            user.setSenha(PasswordEncoder.encoder(dto.getSenha()));
+            user.setSenha(encoder.encode(dto.getSenha()));
         }
 
         user.setAtualizadoEm(LocalDateTime.now());
@@ -59,7 +61,7 @@ public class AdminService {
     }
 
     //bloquear um usuário.
-    public User bloquearUsuario(Long id){
+    public User bloquearUsuario(Long id) {
         User user = buscarPorId(id);
 
         user.setAtivo(false);
@@ -68,7 +70,7 @@ public class AdminService {
     }
 
     //desbloquear um usuário.
-    public User desbloquearUsuario(Long id){
+    public User desbloquearUsuario(Long id) {
         User user = buscarPorId(id);
 
         user.setAtivo(true);
@@ -76,8 +78,11 @@ public class AdminService {
         return repository.save(user);
     }
 
+    public void deletarUsuario(Long id) {
+        User user = buscarPorId(id);
 
-
+        repository.delete(user);
+    }
 
 }
 

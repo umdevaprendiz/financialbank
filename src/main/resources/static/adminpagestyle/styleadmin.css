@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -5,134 +7,182 @@
 }
 
 body {
-    background: #6284ff;
-    font-family: Arial, Helvetica, sans-serif;
+    background: #0f0f1a;
+    font-family: 'DM Sans', Arial, sans-serif;
     color: white;
+    min-height: 100vh;
 }
 
 /* NAVBAR */
 .navbar {
     width: 100%;
-    height: 90px;
-
+    height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     padding: 0 40px;
-
-    background: rgba(255, 255, 255, 0.12);
-
-    backdrop-filter: blur(10px);
-
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     animation: aparecer 0.8s ease;
 }
 
-/* LADO ESQUERDO */
 .left-navbar {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 14px;
 }
 
-/* PERFIL */
 .perfil {
-    width: 65px;
-    height: 65px;
-
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     object-fit: cover;
-
-    border: 3px solid white;
-
+    border: 2px solid rgba(255,255,255,0.2);
     transition: 0.3s;
 }
 
 .perfil:hover {
     transform: scale(1.05);
+    border-color: #6284ff;
 }
 
-/* TEXTO ADMIN */
 .admin-info h1 {
-    font-size: 22px;
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
 }
 
 .admin-info p {
-    font-size: 14px;
-    opacity: 0.8;
+    font-size: 11px;
+    opacity: 0.4;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* LOGOUT */
 .logout-btn {
     text-decoration: none;
-
-    color: white;
-
-    padding: 10px 20px;
-
-    border: 2px solid white;
-
-    border-radius: 10px;
-
-    font-weight: bold;
-
+    color: rgba(255,255,255,0.7);
+    padding: 8px 16px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
     transition: 0.3s;
 }
 
 .logout-btn:hover {
-    background: white;
-    color: #6284ff;
+    background: rgba(255,255,255,0.08);
+    color: white;
+    border-color: rgba(255,255,255,0.3);
 }
 
 /* MENU */
 .admin-options {
     width: 100%;
-
     display: flex;
     justify-content: center;
-
-    gap: 25px;
-
-    padding: 25px 0;
+    gap: 6px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-/* LINKS MENU */
 .admin-options a {
     text-decoration: none;
-
-    color: white;
-
-    font-size: 16px;
-    font-weight: 600;
-
-    padding: 12px 20px;
-
-    border-radius: 12px;
-
+    color: rgba(255,255,255,0.4);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 8px;
     transition: 0.3s;
 }
 
 .admin-options a:hover {
-    background: white;
-
+    background: rgba(98, 132, 255, 0.12);
     color: #6284ff;
-
-    transform: translateY(-3px);
-
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: none;
 }
 
-/* ANIMAÇÃO */
-@keyframes aparecer {
-    from {
-        opacity: 0;
-        transform: translateY(-15px);
-    }
+/* DASHBOARD */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 32px 40px;
+    animation: fadeUp 0.5s ease;
+}
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+/* CARD */
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #6284ff, #a78bfa);
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(98, 132, 255, 0.25);
+}
+
+.card:hover::after {
+    opacity: 1;
+}
+
+.card p {
+    font-size: 11px;
+    opacity: 0.45;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    color: white;
+}
+
+/* ANIMAÇÕES */
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 20px;
+    }
+}
+
+@media (max-width: 500px) {
+    .dashboard {
+        grid-template-columns: 1fr;
     }
 }

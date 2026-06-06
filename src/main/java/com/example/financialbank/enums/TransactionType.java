@@ -1,4 +1,13 @@
 package com.example.financialbank.enums;
 
-public class TransactionType {
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public enum TransactionType {
+    PIX,
+    TED,
+    DOC,
+    BOLETO,
+    CARTAO
+
 }

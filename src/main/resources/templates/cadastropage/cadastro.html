@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/cadastroStyle.css" th:href="@{/style.css}">
+    <link rel="stylesheet" href="/static/script/cadastroStyle.css" th:href="@{/cadastroStyle.css}">
     <title>Cadastro</title>
 </head>
 <body>
@@ -14,7 +14,7 @@
 <div class="cadastro">
     <h1>Criar Conta</h1>
 
-    <form th:action="@{/cadastro}" th:object="${user}" method="post">
+    <form th:action="@{/auth/register}" th:object="${user}" method="post">
 
         <label class="label-name">Nome Completo</label>
         <input type="text" th:field="*{nome}" placeholder="Digite seu nome completo" required>
@@ -32,7 +32,7 @@
         <button type="submit" class="btn-entrar">Finalizar Cadastro</button>
     </form>
 
-    <p style="margin-top: 15px;">Já tem conta? <a th:href="@{/login}">Entrar</a></p>
+    <p style="margin-top: 15px;">Já tem conta? <a th:href="@{auth/login}">Entrar</a></p>
 </div>
 
 </body>
