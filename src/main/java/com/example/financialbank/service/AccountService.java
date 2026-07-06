@@ -4,6 +4,8 @@ import com.example.financialbank.model.Account;
 import com.example.financialbank.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 @Service
 public class AccountService {
     private final AccountRepository repository;
@@ -19,6 +21,19 @@ public class AccountService {
         return repository.countByStatus(AccountStatus.BLOQUEADA);
     }
 
+    public Account createAccount(Account account){
+        String numberAccount;
+        do {
+            numberAccount = generateNumberAccount();
+        } while (repository.existsByNumberAccount(numberAccount));
+        account.setNumberAccount(numberAccount);
+        return repository.save(account);
+    }
 
+    private String generateNumberAccount(){
+        Random random = new Random();
+        int number = random.nextInt(900000); //gera número entre 100000 e 99999
+        return String.valueOf(number);
+    }
 
 }
