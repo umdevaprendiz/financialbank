@@ -32,7 +32,7 @@ public class AccountService {
 
     private String generateNumberAccount(){
         Random random = new Random();
-        int number = random.nextInt(900000); //gera número entre 100000 e 99999
+        int number = 100000 + random.nextInt(900000); //gera número entre 100000 e 999999
         return String.valueOf(number);
     }
 

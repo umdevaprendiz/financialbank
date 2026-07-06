@@ -4,7 +4,7 @@ package com.example.financialbank.configuration;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-//CLasse onde criamos a permissão de cada ROLE
+//Classe onde criamos a permissão de cada ROLE ( cargos )
 @Getter
 public enum Permission {
     ADMIN_READ("admin:read"),

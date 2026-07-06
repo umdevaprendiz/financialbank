@@ -1,7 +1,7 @@
 package com.example.financialbank.model;
 
-import com.example.financialbank.configuration.TransactionType;
 import com.example.financialbank.enums.TransactionStatus;
+import com.example.financialbank.enums.TransactionType;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;

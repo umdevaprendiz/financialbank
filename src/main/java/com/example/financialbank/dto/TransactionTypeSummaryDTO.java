@@ -1,6 +1,6 @@
 package com.example.financialbank.dto;
 
-import com.example.financialbank.configuration.TransactionType;
+import com.example.financialbank.enums.TransactionType;
 import com.example.financialbank.model.Account;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

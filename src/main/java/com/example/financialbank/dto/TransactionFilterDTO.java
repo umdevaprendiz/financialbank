@@ -1,7 +1,7 @@
 package com.example.financialbank.dto;
 
-import com.example.financialbank.configuration.TransactionType;
 import com.example.financialbank.enums.TransactionStatus;
+import com.example.financialbank.enums.TransactionType;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

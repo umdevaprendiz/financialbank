@@ -28,7 +28,7 @@ public class DataInitializer implements CommandLineRunner {
     private String adminCpf;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) throws Exception { // faz com que o email do admin inicie junto com a aplicação.
         if (!userRepository.existsByEmail(adminEmail)) {
             if (!userRepository.existsByEmail(adminEmail) && !userRepository.existsByCpf(adminCpf)) {
                 User admin = new User();
