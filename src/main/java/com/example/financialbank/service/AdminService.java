@@ -3,6 +3,7 @@ package com.example.financialbank.service;
 import com.example.financialbank.model.User;
 import com.example.financialbank.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.financialbank.dto.UserUpdateDTO;
@@ -11,13 +12,13 @@ import java.util.List;
 
 @Service
 public class AdminService {
-    private final UserRepository repository;
-    private final PasswordEncoder encoder;
 
-    public AdminService(UserRepository repository, PasswordEncoder encoder) {
-        this.encoder = encoder;
-        this.repository = repository;
-    }
+    @Autowired
+    private UserRepository repository;
+
+    @Autowired
+    private PasswordEncoder encoder;
+
 
     //Listar os usuários
     public List<User> listarUsuarios() {

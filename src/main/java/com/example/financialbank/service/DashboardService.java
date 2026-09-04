@@ -6,13 +6,18 @@ import com.example.financialbank.enums.SituationEmail;
 import com.example.financialbank.repository.AccountRepository;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class DashboardService {
-    private final TransactionService transactionService;
-    private final AccountService accountService;
+
+    @Autowired
+    private TransactionService transactionService;
+
+    @Autowired
+    private AccountService accountService;
 
     //onde criamos o metódo para montar o dashboard. passando
     public DashboardDTO montarDashboard(){
