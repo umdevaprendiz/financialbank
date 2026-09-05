@@ -15,19 +15,22 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "user_id", unique = true, nullable = false)
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
     @Column(nullable = false, unique = true)
-    private String handle;
+    private String handle; // ex.: "sergio_dev", único no sistema
 
-    @Column(length = 200)
+    private String displayName;
+
+    @Column(length = 280)
     private String bio;
 
     private String avatarUrl;
 
     @CreationTimestamp
-    @Column(name = "date_creation", nullable = false)
+    @Column(name = "date_creation", updatable = false)
     private LocalDateTime dateCreation;
 }
 
