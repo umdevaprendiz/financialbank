@@ -1,6 +1,7 @@
 package com.example.financialbank.service;
 
 import com.example.financialbank.configuration.Role;
+import com.example.financialbank.dto.RegisterUserDTO;
 import com.example.financialbank.enums.SituationEmail;
 import com.example.financialbank.model.User;
 import com.example.financialbank.repository.UserRepository;
@@ -29,20 +30,25 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
 
-    public User saveUser(User user) {
+    // Recebe um DTO, nunca a entidade User direto do cliente — aceitar User inteiro
+    // permitiria o cliente mandar id/role/ativo no corpo da requisição e sobrescrever
+    // outro usuário existente ou se auto-promover a ADMIN.
+    public User registerUser(RegisterUserDTO dto) {
 
-        if(userRepository.findByCpf(user.getCpf()) != null) {
+        if (userRepository.findByCpf(dto.cpf()) != null) {
             throw new RuntimeException("CPF já cadastrado.");
         }
 
-        if(userRepository.existsByEmail(user.getEmail())) {
+        if (userRepository.existsByEmail(dto.email())) {
             throw new RuntimeException("Email já cadastrado.");
         }
 
-        user.setSenha(passwordEncoder.encode(user.getSenha()));
-
+        User user = new User();
+        user.setNome(dto.nome());
+        user.setCpf(dto.cpf());
+        user.setEmail(dto.email());
+        user.setSenha(passwordEncoder.encode(dto.senha()));
         user.setRole(Role.USER);
-
         user.setSituationEmail(SituationEmail.PENDING);
 
         return userRepository.save(user);
