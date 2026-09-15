@@ -15,6 +15,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
     @JoinColumn(name="author_id", nullable = false)
     private Profile author;
 
@@ -24,7 +25,7 @@ public class Post {
     @Column(nullable = false)
     private String urlImage;
 
-    @CreationTimestamp
+    @CreationTimestamp 
     @Column(name="date_creation", updatable = false)
     private LocalDateTime dateCreation;
 }
