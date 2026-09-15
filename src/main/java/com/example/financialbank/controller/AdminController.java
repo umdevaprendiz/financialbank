@@ -8,13 +8,14 @@ import com.example.financialbank.model.User;
 import com.example.financialbank.repository.UserRepository;
 import com.example.financialbank.service.AdminService;
 import com.example.financialbank.service.DashboardService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/admin")
 public class AdminController {
     private final AdminService service;
@@ -44,7 +45,7 @@ public class AdminController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<User> editarUsuario(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO DTO){
+    public ResponseEntity<User> editarUsuario(@PathVariable Long id, @RequestBody UserUpdateDTO DTO){
         return ResponseEntity.ok(service.editarUsuario(id, DTO));
     }
 
@@ -59,8 +60,9 @@ public class AdminController {
     }
 
     @GetMapping("/dashboard")
-    public ResponseEntity<DashboardDTO> montarDashboard(){
-        return ResponseEntity.ok(dashboardService.montarDashboard());
+    public String montarDashboard(Model model){
+       model.addAttribute("dashboard", dashboardService.montarDashboard());
+       return "adminpage/adminPage";
     }
 
 

@@ -32,10 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 .env
+.env.example
 */IMPLEMENTACAO_FASE1_DASHBOARD.md
 MODELOS_FASE2_SOCIAL.md
-
-### Frontend (Node/Vite) ###
-frontend/node_modules/
-frontend/dist/
 

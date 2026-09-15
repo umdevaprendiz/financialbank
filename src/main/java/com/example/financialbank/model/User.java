@@ -1,14 +1,12 @@
 package com.example.financialbank.model;
 
 import com.example.financialbank.enums.SituationEmail;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -28,8 +26,8 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "data_nascimento", nullable = false)
-    private LocalDate dataNascimento;
+    @Column(name = "cpf_user", unique = true, nullable = false)
+    private String cpf;
 
     @Column(name = "name", nullable = false)
     private String nome;
@@ -63,10 +61,6 @@ public class User implements UserDetails {
         return role.getAuthorities();
     }
 
-    // getPassword() vem da interface UserDetails (Spring Security usa isso internamente,
-    // fora do Jackson) — sem @JsonIgnore aqui, o hash da senha vazava em QUALQUER endpoint
-    // que devolvesse um User (cadastro, listagem de usuários no admin, buscar por id).
-    @JsonIgnore
     @Override
     public String getPassword() {
         return this.senha;
