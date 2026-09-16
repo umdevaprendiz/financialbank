@@ -2,17 +2,17 @@ package com.example.financialbank.service;
 import com.example.financialbank.enums.AccountStatus;
 import com.example.financialbank.model.Account;
 import com.example.financialbank.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
 @Service
 public class AccountService {
-    private final AccountRepository repository;
 
-    public AccountService(AccountRepository repository){
-        this.repository = repository;
-    }
+    @Autowired
+    private AccountRepository repository;
+
     public Long countActive(){
         return repository.countByStatus(AccountStatus.ATIVA);
     }
